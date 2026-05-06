@@ -1,13 +1,17 @@
 class Game:
-    def __init__(self, title: str | None, developer: str | None, release_date: str | None):
+    def __init__(self, title: str | None, developer: str | None, release_date: str | None, small_thumb: str | None):
         self.title = title
         self.developer = developer
         self.release_date = release_date
+        self.small_thumb = small_thumb
         #self.publisher = publisher
 
     # Methods
     def get_title(self):
         return self.title
+    
+    def get_small_thumb(self):
+        return self.small_thumb
 
     def get_developer(self):
         return self.developer
