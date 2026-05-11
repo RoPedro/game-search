@@ -1,4 +1,3 @@
-import requests
 from os import getenv
 from dotenv import load_dotenv
 import nextcord
@@ -15,7 +14,7 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="?", intents=intents)
 
 
-@bot.command(name="gsearch", description="Search for a game by its name")
+@bot.command(name="gs", description="Search for a game by its name")
 async def gsearch(ctx, *, query: str):
     from commands import gsearch_command
 
