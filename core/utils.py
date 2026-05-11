@@ -1,7 +1,11 @@
 from datetime import datetime
 
-def convert_date(date_str):
+
+# Don't crash if date is invalid
+def convert_date(date_stamp):
+    if date_stamp is None:
+        return "Unknown"
     try:
-        return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d-%m-%Y")
+        return datetime.fromtimestamp(date_stamp).strftime("%d/%m/%Y")
     except ValueError:
         return None
