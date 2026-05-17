@@ -1,6 +1,9 @@
 from datetime import datetime
 from models.game import Game
 from nextcord import Embed
+import logging
+
+log = logging.getLogger(__name__)
 
 
 # Don't crash if date is invalid
@@ -15,7 +18,7 @@ def convert_date(date_stamp):
 
 def create_games_array(igdb_data, limit=4):
     games = []
-    for game in range(limit): # Limit = number of games to show, default is 4.
+    for game in range(limit):  # Limit = number of games to show, default is 4.
         try:
             data_developer, data_publisher = find_set_companies(
                 igdb_data[game]
@@ -53,10 +56,10 @@ def build_embed(games):
     embed.set_image(url=games[0].get_small_thumb())
     embed.set_footer(text="Data provided by IGDB")
 
-    print(f"Title: {games[0].get_title()}")
-    print(f"Small Thumb: {games[0].get_small_thumb()}")
-    print(f"Developer: {games[0].get_developer()}")
-    print(f"Publisher: {games[0].get_publisher()}")
-    print(f"Release Date: {convert_date(games[0].get_release_date())}")
+    log.debug(f"Title: {games[0].get_title()}")
+    log.debug(f"Small Thumb: {games[0].get_small_thumb()}")
+    log.debug(f"Developer: {games[0].get_developer()}")
+    log.debug(f"Publisher: {games[0].get_publisher()}")
+    log.debug(f"Release Date: {convert_date(games[0].get_release_date())}")
 
     return embed
