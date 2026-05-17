@@ -1,8 +1,13 @@
+import logging
 from os import getenv
 from dotenv import load_dotenv
 import nextcord
 from nextcord.ext import commands
 
+from logger import setup_logging
+
+setup_logging()
+log = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -22,5 +27,4 @@ async def gsearch(ctx, *, query: str):
     await ctx.send(embed=embed)
 
 
-if bot.run(str(TOKEN)):
-    print("Bot is running!")
+bot.run(str(TOKEN))
