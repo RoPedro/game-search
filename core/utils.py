@@ -15,18 +15,18 @@ def convert_date(date_stamp):
 
 def create_games_array(igdb_data, limit=4):
     games = []
-    for i in range(limit):
+    for game in range(limit): # Limit = number of games to show, default is 4.
         try:
             data_developer, data_publisher = find_set_companies(
-                igdb_data[i]
+                igdb_data[game]
             )  # send the index so it knows what game is. (data[game_index])
-            game = Game(  # iterate with i because igdb games list don't have a "game" key, so number instead.
-                title=igdb_data[i]["name"],
+            game = Game(  # iterate with game because igdb games list don't have a "game" key, so number instead.
+                title=igdb_data[game]["name"],
                 developer=data_developer,
                 publisher=data_publisher,
-                release_date=igdb_data[i]["first_release_date"],
+                release_date=igdb_data[game]["first_release_date"],
                 small_thumb="https:"
-                + igdb_data[i]["cover"]["url"].replace("t_thumb", "t_cover_big"),
+                + igdb_data[game]["cover"]["url"].replace("t_thumb", "t_cover_big"),
             )
             games.append(game)
         except (IndexError, KeyError):
