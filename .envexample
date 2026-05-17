@@ -1,0 +1,5 @@
+TOKEN="BOT_TOKEN_HERE"
+ENV="development/production"
+
+IGDB_CLIENT_ID="IGDB_CLIENT_ID_HERE"
+IGDB_TOKEN="IGDB_TOKEN_HERE" # https://api-docs.igdb.com/#authentication
