@@ -1,10 +1,15 @@
 import logging
+import threading
 from os import getenv
 from dotenv import load_dotenv
 import nextcord
 from nextcord.ext import commands
 
 from logger import setup_logging
+from core.health_handler import run_health_server
+
+# Thread the health server so it crashes gracefully with the main process
+threading.Thread(target=run_health_server, daemon=True).start()
 
 setup_logging()
 log = logging.getLogger(__name__)
