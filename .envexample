@@ -1,5 +1,5 @@
-TOKEN="BOT_TOKEN_HERE"
+TOKEN="BOT_TOKEN_HERE" # https://discord.com/developers/applications
 ENV="development/production"
 
-IGDB_CLIENT_ID="IGDB_CLIENT_ID_HERE"
+IGDB_CLIENT_ID="IGDB_CLIENT_ID_HERE" # https://dev.twitch.tv/console
 IGDB_TOKEN="IGDB_TOKEN_HERE" # https://api-docs.igdb.com/#authentication
