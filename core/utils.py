@@ -29,7 +29,7 @@ def create_games_array(igdb_data, limit=4):
                 publisher=data_publisher,
                 release_date=igdb_data[game]["first_release_date"],
                 small_thumb="https:"
-                + igdb_data[game]["cover"]["url"].replace("t_thumb", "t_cover_big"),
+                + igdb_data[game]["cover"]["url"].replace("t_thumb", "t_1080p"),
             )
             games.append(game)
         except (IndexError, KeyError):
@@ -52,6 +52,7 @@ def build_embed(games):
     embed = Embed(
         title=games[0].get_title(),
         description=f"Developer: {games[0].get_developer()}\nPublisher: {games[0].get_publisher()}\nRelease Date: {convert_date(games[0].get_release_date())}",
+        colour=0x006800, # Green color
     )
     embed.set_image(url=games[0].get_small_thumb())
     embed.set_footer(text="Data provided by IGDB")
