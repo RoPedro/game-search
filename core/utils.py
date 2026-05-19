@@ -52,6 +52,7 @@ def build_embed(games):
     embed = Embed(
         title=games[0].get_title(),
         description=f"Developer: {games[0].get_developer()}\nPublisher: {games[0].get_publisher()}\nRelease Date: {convert_date(games[0].get_release_date())}",
+        colour=0x006800, # Green color
     )
     embed.set_image(url=games[0].get_small_thumb())
     embed.set_footer(text="Data provided by IGDB")
