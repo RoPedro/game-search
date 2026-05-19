@@ -16,12 +16,20 @@ log = logging.getLogger(__name__)
 
 load_dotenv()
 
+ENV = getenv("ENV")
 TOKEN = getenv("TOKEN")
 
 # Define intents so it can read message content (required for commands to work)
 intents = nextcord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix="?", intents=intents)
+
+prefix = ""
+if ENV == "production":
+    prefix = "?"
+elif ENV == "development":
+    prefix = "."
+
+bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 
 @bot.command(name="gs", description="Search for a game by its name")
