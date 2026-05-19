@@ -29,7 +29,7 @@ def create_games_array(igdb_data, limit=4):
                 publisher=data_publisher,
                 release_date=igdb_data[game]["first_release_date"],
                 small_thumb="https:"
-                + igdb_data[game]["cover"]["url"].replace("t_thumb", "t_cover_big"),
+                + igdb_data[game]["cover"]["url"].replace("t_thumb", "t_1080p"),
             )
             games.append(game)
         except (IndexError, KeyError):
