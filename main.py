@@ -37,7 +37,16 @@ async def gsearch(ctx, *, query: str):
     from commands import gsearch_command
 
     embed = gsearch_command(query)
-    await ctx.send(embed=embed)
+    
+    if embed is not None:
+        await ctx.send(embed=embed)
+    else:
+        no_results = nextcord.Embed(
+        title="No Games Found",
+        description="No games matched your search. Try a different title or check your spelling.",
+        color=nextcord.Color.red()
+    )
+        await ctx.send(embed=no_results)
 
 
 bot.run(str(TOKEN))
