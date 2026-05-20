@@ -2,3 +2,4 @@ requests
 nextcord
 dotenv
 igdb-api-v4
+pillow
