@@ -31,6 +31,7 @@ elif ENV == "development":
 
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
+
 @bot.command(name="gs", description="Search for a game by its name")
 @commands.cooldown(1, 5, lambda message: message.author.id)
 async def gsearch(ctx, *, query: str):
@@ -41,10 +42,19 @@ async def gsearch(ctx, *, query: str):
     """
     from commands import gsearch_command
 
-    embed = gsearch_command(query)
+    result = gsearch_command(query)
+
+    """
+    Assign those later so we can have a fallback if results is None.
+    If no game matches the query, the game list will be a "None" list, therefore
+    python will try to iterate on it, throwing an error. So we only assign a value
+    if there's valid results. See commands.py:17
+    """
+    embed, menu = result if result is not None else (None, None)
 
     if embed is not None:
         await ctx.send(embed=embed)
+        await ctx.send(view=menu)
     else:
         no_results = nextcord.Embed(
             title="No Games Found",

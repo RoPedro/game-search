@@ -1,6 +1,6 @@
 from datetime import datetime
 from models.game import Game
-from nextcord import Embed
+from nextcord import Embed, ui
 import logging
 
 log = logging.getLogger(__name__)
@@ -16,15 +16,17 @@ def convert_date(date_stamp):
         return None
 
 
-def create_games_array(igdb_data, limit=4):
+def create_games_array(igdb_data, limit):
     games = []
     for game in range(limit):  # Limit = number of games to show, default is 4.
         try:
             data_developer, data_publisher = find_set_companies(
                 igdb_data[game]
             )  # send the index so it knows what game is. (data[game_index])
+            
             game = Game(  # iterate with game because igdb games list don't have a "game" key, so number instead.
                 title=igdb_data[game]["name"],
+                slug=igdb_data[game]["slug"],
                 developer=data_developer,
                 publisher=data_publisher,
                 release_date=igdb_data[game]["first_release_date"],
@@ -47,6 +49,14 @@ def find_set_companies(igdb_data):
             publisher = company["company"]["name"]
 
     return developer, publisher
+
+
+def build_menu(games):
+    from models.menu import GamesDropdown
+
+    menu = ui.View()
+    menu.add_item(GamesDropdown(games))
+    return menu
 
 
 def build_embed(games):

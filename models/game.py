@@ -5,6 +5,7 @@ class Game:
     def __init__(
         self,
         title: str | None = None,
+        slug: str | None = None,
         developer: str | None = None,
         publisher: str | None = None,
         release_date: str | None = None,
@@ -12,6 +13,7 @@ class Game:
         dominant_color: int | None = None,
     ):
         self.title = title
+        self.slug = slug
         self.developer = developer
         self.publisher = publisher
         self.release_date = release_date
@@ -21,6 +23,9 @@ class Game:
     # Methods
     def get_title(self):
         return self.title
+    
+    def get_slug(self):
+        return self.slug
 
     def get_developer(self):
         return self.developer
