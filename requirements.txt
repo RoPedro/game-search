@@ -1,4 +1,5 @@
-requests
-nextcord
-dotenv
-igdb-api-v4
+requests==2.33.1
+nextcord==3.1.1
+python-dotenv==1.2.2
+igdb-api-v4==0.3.3
+pillow==12.2.0
