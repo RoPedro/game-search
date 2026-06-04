@@ -74,6 +74,8 @@ async def on_command_error(ctx, error):
             color=nextcord.Color.orange(),
         )
         await ctx.send(embed=cd_embed)
+    else:  # Unhandled errors get suppressed if not logged.
+        log.error("Unhandled command error", exc_info=error)
 
 
 bot.run(str(TOKEN))
