@@ -9,7 +9,8 @@ class GamesDropdown(ui.Select):
         for game in self.games:  # Skip first game since it's already shown in the embed
             options.append(
                 SelectOption(
-                    label=game.get_title(),
+                    label=f"{game.get_title()}",
+                    description=game.get_year(),
                 )
             )
         super().__init__(
