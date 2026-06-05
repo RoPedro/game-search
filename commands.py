@@ -8,11 +8,30 @@ load_dotenv()
 
 
 def gsearch_command(query: str):
-    LIMIT = 4
-    game_response = wrapper.api_request(
-        "games",
-        f'fields name, slug, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, first_release_date, cover.url; search "{query}"; where game_type = 0; limit {LIMIT};',
-    )
+    LIMIT = 5
+    
+    if query.endswith("remake") or query.endswith("remaster"): 
+        query = query.removesuffix("remake").removesuffix("remaster").strip()
+        game_response = wrapper.api_request(
+            "games",
+            (
+                f"fields name, slug, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, first_release_date, cover.url;"
+                f'search "{query}";'
+                f"where game_type = (0, 8, 9);"
+                f"limit {LIMIT};"
+            )
+        )
+    else:
+        game_response = wrapper.api_request(
+            "games",
+            (
+                f"fields name, slug, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, first_release_date, cover.url;"
+                f'search "{query}";'
+                f"where game_type = 0;"
+                f"limit {LIMIT};"
+            ),
+        )
+        
     igdb_data = json.loads(game_response)
     if igdb_data == []:
         return None
