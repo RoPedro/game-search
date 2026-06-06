@@ -51,6 +51,8 @@ def find_set_companies(igdb_data):
     for company in igdb_data["involved_companies"]:  # loop in involved companies
         if company["developer"] == True:
             developer = company["company"]["name"]
+            if company["publisher"] == True: # Avoids publisher being empty if developer and publisher is true
+                publisher = company["company"]["name"]
         elif company["publisher"] == True:
             publisher = company["company"]["name"]
 
