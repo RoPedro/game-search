@@ -1,5 +1,11 @@
 from datetime import datetime
 from models.game import Game
+
+'''
+DEPRECATION WARNING: under the hood, Nextcord uses `asyncio.iscoroutinefunction(value)` when importing it's
+functions, which will be removed in Python 3.16. Before considering updating to 3.16, check for this 
+compatibility issue on Nextcord.
+'''
 from nextcord import Embed, ui
 import logging
 

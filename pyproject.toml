@@ -4,8 +4,15 @@ version = "0.3.0"
 authors = [{ name = "Pedro Moreira", email = "pedro.lucas.rocha72@gmail.com" }]
 description = "A Discord bot that allows users to search for games using the IGDB API."
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = "==3.14.*"
 dependencies = ["igdb-api-v4", "python-dotenv", "requests", "nextcord"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    "ignore:'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16:DeprecationWarning:nextcord.member",
+]
 
 [project.urls]
 Homepage = "https://github.com/RoPedro/GameSearch"
