@@ -31,7 +31,7 @@ python3 main.py
 
 ## Code Style & Conventions
 
-- **Language/runtime:** Refer to `pyproject.toml
+- **Language/runtime:** Refer to `pyproject.toml`
 - **Formatter:** Prettier, Black
 - **Linter:** <!-- e.g. ESLint, Ruff --> WIP
 
