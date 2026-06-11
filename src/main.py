@@ -3,7 +3,7 @@ import threading
 import nextcord
 from nextcord.ext import commands
 
-from logger import setup_logging
+from config.logger import setup_logging
 from core.health_handler import run_health_server
 from config.env import TOKEN, prefix
 
@@ -29,7 +29,7 @@ async def gsearch(ctx, *, query: str):
     Tipically we would use @commands.cooldown(x, y, BucketType.user), which returns message.author.id. Since not working, we use lambda instead.
     Lambda works because cooldown() only blocks BucketType, so we bypass by getting the author ID directly from the message object.
     """
-    from commands import gsearch_command
+    from src.commands import gsearch_command
 
     result = gsearch_command(query)
 

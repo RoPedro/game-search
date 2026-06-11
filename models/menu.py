@@ -1,5 +1,5 @@
 from nextcord import Interaction, ui, SelectOption
-from commands import slug_search_command
+from src.commands import slug_search_command
 
 
 class GamesDropdown(ui.Select):
