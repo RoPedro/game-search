@@ -1,12 +1,11 @@
 import logging
 import threading
-from os import getenv
-from dotenv import load_dotenv
 import nextcord
 from nextcord.ext import commands
 
-from logger import setup_logging
+from config.logger import setup_logging
 from core.health_handler import run_health_server
+from config.env import TOKEN, prefix
 
 # Thread the health server so it crashes gracefully with the main process
 threading.Thread(target=run_health_server, daemon=True).start()
@@ -14,20 +13,10 @@ threading.Thread(target=run_health_server, daemon=True).start()
 setup_logging()
 log = logging.getLogger(__name__)
 
-load_dotenv()
-
-ENV = getenv("ENV")
-TOKEN = getenv("TOKEN")
-
 # Define intents so it can read message content (required for commands to work)
 intents = nextcord.Intents.default()
 intents.message_content = True
 
-prefix = ""
-if ENV == "production":
-    prefix = "?"
-elif ENV == "development":
-    prefix = "."
 
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
@@ -40,7 +29,7 @@ async def gsearch(ctx, *, query: str):
     Tipically we would use @commands.cooldown(x, y, BucketType.user), which returns message.author.id. Since not working, we use lambda instead.
     Lambda works because cooldown() only blocks BucketType, so we bypass by getting the author ID directly from the message object.
     """
-    from commands import gsearch_command
+    from src.commands import gsearch_command
 
     result = gsearch_command(query)
 
