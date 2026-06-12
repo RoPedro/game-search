@@ -1,6 +1,3 @@
-from io import BytesIO
-
-
 class Game:
     def __init__(
         self,
@@ -38,8 +35,9 @@ class Game:
 
     def get_year(self):
         from datetime import datetime
+
         dt_stamp = self.release_date
-        return datetime.fromtimestamp(dt_stamp).strftime("%Y") # type: ignore
+        return datetime.fromtimestamp(dt_stamp).strftime("%Y")  # type: ignore
 
     def get_small_thumb(self):
         return self.small_thumb
