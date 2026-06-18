@@ -1,11 +1,11 @@
 from datetime import datetime
 from models.game import Game
 
-'''
+"""
 DEPRECATION WARNING: under the hood, Nextcord uses `asyncio.iscoroutinefunction(value)` when importing it's
 functions, which will be removed in Python 3.16. Before considering updating to 3.16, check for this 
 compatibility issue on Nextcord.
-'''
+"""
 from nextcord import Embed, ui
 import logging
 
@@ -29,10 +29,11 @@ def create_games_array(igdb_data, limit):
             data_developer, data_publisher = find_set_companies(
                 igdb_data[game]
             )  # send the index so it knows what game is. (data[game_index])
-            
+            external_id = assign_external_id(igdb_data[game])
             game = Game(  # iterate with game because igdb games list don't have a "game" key, so number instead.
                 title=igdb_data[game]["name"],
                 slug=igdb_data[game]["slug"],
+                external_id=external_id,
                 developer=data_developer,
                 publisher=data_publisher,
                 release_date=igdb_data[game]["first_release_date"],
@@ -41,7 +42,8 @@ def create_games_array(igdb_data, limit):
             )
             game.find_dominant_color()
             games.append(game)
-        except (IndexError, KeyError):
+        except (IndexError, KeyError) as error:
+            log.debug(error)
             continue
     return games
 
@@ -51,12 +53,24 @@ def find_set_companies(igdb_data):
     for company in igdb_data["involved_companies"]:  # loop in involved companies
         if company["developer"] == True:
             developer = company["company"]["name"]
-            if company["publisher"] == True: # Avoids publisher being empty if developer and publisher is true
+            if (
+                company["publisher"] == True
+            ):  # Avoids publisher being empty if developer and publisher is true
                 publisher = company["company"]["name"]
         elif company["publisher"] == True:
             publisher = company["company"]["name"]
 
     return developer, publisher
+
+
+def assign_external_id(igdb_data):
+    external_id = ""
+    log.debug(igdb_data["slug"])
+    for ex_game in igdb_data["external_games"]:
+        if (ex_game["external_game_source"]["name"]) == "Steam":
+            external_id = ex_game["uid"]
+
+    return external_id
 
 
 def build_menu(games):
@@ -71,7 +85,9 @@ def build_embed(games):
     embed = Embed(
         title=games[0].get_title(),
         description=f"Developer: {games[0].get_developer()}\nPublisher: {games[0].get_publisher()}\nRelease Date: {convert_date(games[0].get_release_date())}",
-        colour=int(games[0].get_dominant_color(), 16), # Need to specify 16 since we're passing a hexadecimal string
+        colour=int(
+            games[0].get_dominant_color(), 16
+        ),  # Need to specify 16 since we're passing a hexadecimal string
     )
     embed.set_image(url=games[0].get_small_thumb())
     embed.set_footer(text="Data provided by IGDB")

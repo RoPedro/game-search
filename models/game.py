@@ -3,6 +3,7 @@ class Game:
         self,
         title: str | None = None,
         slug: str | None = None,
+        external_id: str | None = None,
         developer: str | None = None,
         publisher: str | None = None,
         release_date: int | None = None,
@@ -11,6 +12,7 @@ class Game:
     ):
         self.title = title
         self.slug = slug
+        self.external_id = external_id
         self.developer = developer
         self.publisher = publisher
         self.release_date = release_date
@@ -23,6 +25,9 @@ class Game:
 
     def get_slug(self):
         return self.slug
+
+    def get_external_id(self):
+        return self.external_id
 
     def get_developer(self):
         return self.developer
