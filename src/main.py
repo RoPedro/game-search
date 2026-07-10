@@ -39,10 +39,11 @@ async def gsearch(ctx, *, query: str):
     python will try to iterate on it, throwing an error. So we only assign a value
     if there's valid results. See commands.py:17
     """
-    embed, menu = result if result is not None else (None, None)
+    embed, menu, prices = result if result is not None else (None, None, None)
 
     if embed is not None:
         await ctx.send(embed=embed)
+        await ctx.send(embed=prices)
         await ctx.send(view=menu)
     else:
         no_results = nextcord.Embed(

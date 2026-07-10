@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import json
 
-from core.utils import build_embed, create_games_array, build_menu
+from core.utils import build_embed, create_games_array, build_menu, build_prices_embed
 from core.igdb_auth import wrapper
 from integrations.igdb import getFields
 
@@ -39,9 +39,12 @@ def gsearch_command(query: str):
         return None
 
     games = create_games_array(igdb_data, limit=LIMIT)
+    
+    # TODO: Study the possibility of wrapping all those functions into one `build_user_response`
     embed = build_embed(games)
+    price_embed = build_prices_embed(games)
     menu = build_menu(games)
-    return embed, menu
+    return embed, menu, price_embed
 
 
 # A background command that the user should only access by other functions such as gamesearch
@@ -56,4 +59,5 @@ def slug_search_command(query: str):
 
     game = create_games_array(igdb_data, 1)  # Send 1 for limit since it's only one game
     embed = build_embed(game)
+    price_embed = build_prices_embed(game)
     return embed

@@ -9,6 +9,8 @@ compatibility issue on Nextcord.
 from nextcord import Embed, ui
 import logging
 
+from integrations.isThereAnyDeal import get_itad_price, ITAD_ICON
+
 log = logging.getLogger(__name__)
 
 
@@ -30,6 +32,7 @@ def create_games_array(igdb_data, limit):
                 igdb_data[game]
             )  # send the index so it knows what game is. (data[game_index])
             external_id = assign_external_id(igdb_data[game])
+
             game = Game(  # iterate with game because igdb games list don't have a "game" key, so number instead.
                 title=igdb_data[game]["name"],
                 slug=igdb_data[game]["slug"],
@@ -99,3 +102,14 @@ def build_embed(games):
     log.debug(f"Release Date: {convert_date(games[0].get_release_date())}")
 
     return embed
+
+def build_prices_embed(games):
+    current_price, hist_low = get_itad_price(games[0].get_external_id())
+    prices_embed = Embed(
+        title=f"💸 Deals and price for {games[0].get_title()} 💸",
+        description=f"Current Price: {current_price["amount"]} ({current_price["cut"]}%)\n"
+                    f"Historical Low: {hist_low["amount"]} ({hist_low["cut"]}%)"
+    )
+    prices_embed.set_footer(text=f"Data provided by isThereAnyDeal", icon_url=ITAD_ICON)
+    
+    return prices_embed
