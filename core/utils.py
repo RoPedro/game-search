@@ -103,8 +103,14 @@ def build_embed(games):
 
     return embed
 
-def build_prices_embed(games):
-    current_price, hist_low = get_itad_price(games[0].get_external_id())
+async def build_prices_embed(games):
+    result = get_itad_price(games[0].get_external_id())
+    if result == "":
+        return None
+    
+    current_price = result[0] # 0 = Current Price
+    hist_low = result[1] # 1 = Historical Low
+    
     prices_embed = Embed(
         title=f"💸 Deals and price for {games[0].get_title()} 💸",
         description=f"Current Price: {current_price["amount"]} ({current_price["cut"]}%)\n"

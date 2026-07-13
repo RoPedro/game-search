@@ -15,8 +15,11 @@ def get_itad_price(external_id):
     )
 
     game_data = json.loads(r.text)
+    if game_data["found"] == False:
+        return ""
     itad_id = game_data["game"]["id"]
 
+    
     price_r = requests.post(
         f"{ITAD_BASE_URL}/games/overview/v2",
         params={"deals": True},
@@ -34,8 +37,5 @@ def get_itad_price(external_id):
         "cut": price_data["prices"][0]["lowest"]["cut"]
     }
     
-    try:
-        return current_price, hist_low
-    except current_price["cut"] == 0:
-        return None, hist_low
+    return current_price, hist_low
         
