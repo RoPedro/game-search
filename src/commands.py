@@ -47,10 +47,11 @@ def gsearch_command(query: str):
 
 # A background command that the user should only access by other functions such as gamesearch
 def slug_search_command(query: str):
+    query_fields = getFields()
     game_response = wrapper.api_request(
-        "games",
-        f'fields name, slug, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, first_release_date, cover.url; where slug = "{query}";',
+        "games", (f"fields {query_fields};" f'where slug = "{query}";')
     )
+    
     igdb_data = json.loads(game_response)
     if igdb_data == []:
         return None
