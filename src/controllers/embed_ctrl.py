@@ -3,7 +3,7 @@ from models.embeds import deals_not_found
 
 
 async def send_prices(ctx, result):
-    prices = await build_prices_embed(result)
+    prices = await build_prices_embed(result[0])
     if prices is not "":
         await ctx.send(embed=prices)
     else:
