@@ -5,7 +5,8 @@ import nextcord
 from nextcord.ext import commands
 
 from core.health_handler import run_health_server
-from core.utils import build_embed, build_menu, build_prices_embed
+from core.utils import build_embed, build_menu
+from src.controllers.embed_ctrl import send_prices
 from config.logger import setup_logging
 from config.env import TOKEN, prefix
 
@@ -48,6 +49,8 @@ async def gsearch(ctx, *, query: str):
     if embed is not None:
         await ctx.send(embed=embed)
         await ctx.send(view=menu)
+
+        asyncio.create_task(send_prices(ctx, result))
         
         async def send_prices():
             prices = await build_prices_embed(result)
@@ -61,7 +64,6 @@ async def gsearch(ctx, *, query: str):
                 )
                 await ctx.send(embed=no_results)
                 
-        asyncio.create_task(send_prices())
     else:
         no_results = nextcord.Embed(
             title="No Games Found",
