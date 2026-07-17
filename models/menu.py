@@ -1,5 +1,8 @@
 from nextcord import Interaction, ui, SelectOption
+
 from src.commands import slug_search_command
+from core.utils import build_prices_embed
+from models.embeds import deals_not_found
 
 
 class GamesDropdown(ui.Select):
@@ -25,7 +28,7 @@ class GamesDropdown(ui.Select):
         game = next(
             g for g in self.games if g.get_title() == selected_game
         )  # loops games until match by title
-        
+
         embed = slug_search_command(str(game.get_slug()))
 
         """ 
@@ -33,7 +36,16 @@ class GamesDropdown(ui.Select):
         wrapping in a if block suppress the warning and gives the user error feedback. 
         """
         if embed is not None:
-            await interaction.response.send_message(embed=embed)
+            await interaction.response.defer(ephemeral=True)
+            await interaction.followup.send(embed=embed)
+            
+            prices = await build_prices_embed(game)
+            
+            # If block needed because send() does not support None, therefore, interpreter complains.
+            if prices is not None:
+                await interaction.followup.send(embed=prices)
+            else:
+                await interaction.followup.send(embed=deals_not_found)
         else:
             await interaction.response.send_message(
                 "An error ocurred. Please try again."

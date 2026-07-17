@@ -1,6 +1,6 @@
 [project]
 name = "GameSearch"
-version = "0.4.2"
+version = "0.5.0"
 authors = [{ name = "Pedro Moreira", email = "pedro.lucas.rocha72@gmail.com" }]
 description = "A Discord bot that allows users to search for games using the IGDB API."
 readme = "README.md"

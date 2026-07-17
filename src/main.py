@@ -1,10 +1,14 @@
 import logging
 import threading
+import asyncio
 import nextcord
 from nextcord.ext import commands
 
-from config.logger import setup_logging
 from core.health_handler import run_health_server
+from core.utils import build_embed, build_menu
+from models.embeds import game_not_found
+from src.controllers.embed_ctrl import send_prices
+from config.logger import setup_logging
 from config.env import TOKEN, prefix
 
 # Thread the health server so it crashes gracefully with the main process
@@ -39,18 +43,16 @@ async def gsearch(ctx, *, query: str):
     python will try to iterate on it, throwing an error. So we only assign a value
     if there's valid results. See commands.py:17
     """
-    embed, menu = result if result is not None else (None, None)
+    embed = build_embed(result)
+    menu = build_menu(result)
 
     if embed is not None:
         await ctx.send(embed=embed)
         await ctx.send(view=menu)
+
+        asyncio.create_task(send_prices(ctx, result))
     else:
-        no_results = nextcord.Embed(
-            title="No Games Found",
-            description="No games matched your search. Try a different title or check your spelling.",
-            color=nextcord.Color.red(),
-        )
-        await ctx.send(embed=no_results)
+        await ctx.send(embed=game_not_found)
 
 
 @bot.event

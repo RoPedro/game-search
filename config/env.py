@@ -5,6 +5,7 @@ load_dotenv()
 
 ENV = getenv("ENV")
 TOKEN = getenv("TOKEN")
+ITAD_TOKEN = getenv("ITAD_TOKEN")
 
 
 prefix = ""
