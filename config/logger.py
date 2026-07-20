@@ -2,7 +2,7 @@ import os
 import logging
 
 def setup_logging():
-    env = os.getenv('ENV', 'development')
+    env = os.getenv('ENV')
     
     level = logging.DEBUG if env == 'development' else logging.WARNING
     logging.basicConfig(

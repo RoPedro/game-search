@@ -8,8 +8,6 @@ TOKEN = getenv("TOKEN")
 ITAD_TOKEN = getenv("ITAD_TOKEN")
 
 
-prefix = ""
-if ENV == "production":
-    prefix = "?"
-elif ENV == "development":
+prefix = "?"
+if ENV == "development":
     prefix = "."
