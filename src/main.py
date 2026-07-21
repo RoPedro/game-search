@@ -49,7 +49,7 @@ async def gsearch(ctx, *, query: str):
         menu = build_menu(result)
         
         await ctx.send(embed=embed)
-        await ctx.send(view=menu)
+        if menu is not None: await ctx.send(view=menu)
 
         asyncio.create_task(send_prices(ctx, result))
     else:

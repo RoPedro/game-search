@@ -78,10 +78,12 @@ def assign_external_id(igdb_data):
 
 def build_menu(games):
     from models.menu import GamesDropdown
-
-    menu = ui.View()
-    menu.add_item(GamesDropdown(games))
-    return menu
+    if len(games) >= 2:
+        menu = ui.View()
+        menu.add_item(GamesDropdown(games))
+        return menu
+    else:
+        return None
 
 
 def build_embed(games):
