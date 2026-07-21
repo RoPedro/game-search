@@ -2,6 +2,7 @@ import requests, json
 from config.env import ITAD_TOKEN
 
 ITAD_BASE_URL = "https://api.isthereanydeal.com"
+ITAD_BASE_WEB_URL = "https://isthereanydeal.com"
 ITAD_ICON = "https://isthereanydeal.com/public/assets/logo-GBHE6XF2.svg"
 ITAD_GAME_LOOKUP_URL = ""
 auth_header = {"ITAD-API-Key": ITAD_TOKEN}
@@ -18,6 +19,7 @@ def get_itad_price(external_id):
     if game_data["found"] == False:
         return ""
     itad_id = game_data["game"]["id"]
+    itad_slug = game_data["game"]["slug"]
 
     
     price_r = requests.post(
@@ -37,5 +39,5 @@ def get_itad_price(external_id):
         "cut": price_data["prices"][0]["lowest"]["cut"]
     }
     
-    return current_price, hist_low
+    return current_price, hist_low, itad_slug
         

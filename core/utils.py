@@ -9,7 +9,7 @@ compatibility issue on Nextcord.
 from nextcord import Embed, ui
 import logging
 
-from integrations.isThereAnyDeal import get_itad_price, ITAD_ICON
+from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
 
 log = logging.getLogger(__name__)
 
@@ -111,12 +111,14 @@ async def build_prices_embed(games):
     
     current_price = result[0] # 0 = Current Price
     hist_low = result[1] # 1 = Historical Low
+    slug = result[2] # 2 = Slug
     
     prices_embed = Embed(
-        title=f"💸 Deals and price 💸",
+        title=f"💸Deals and price💸",
         description=f"Current Price: {current_price["amount"]} ({current_price["cut"]}%)\n"
                     f"Historical Low: {hist_low["amount"]} ({hist_low["cut"]}%)"
     )
-    prices_embed.set_footer(text=f"Data provided by isThereAnyDeal", icon_url=ITAD_ICON)
+    prices_embed.add_field(name="Detailed prices", value=f"{ITAD_BASE_WEB_URL}/game/{slug}")
+    prices_embed.set_footer(text=f"Data provided by isThereAnyDeal")
     
     return prices_embed
