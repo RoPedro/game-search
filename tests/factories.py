@@ -22,6 +22,16 @@ def igdb_involved_company_factory(**overrides: Any) -> dict[str, Any]:
     involved_company.update(overrides)
     return involved_company
 
+def igdb_external_games_factory(**overrides: Any) -> dict[str, Any]:
+    external_game = {
+        "id": 113287,
+        "external_game_source": {
+            "id": 3,
+            "name": "GiantBomb"
+        }
+    }
+    external_game.update(overrides)
+    return external_game
 
 def igdb_cover_factory(**overrides: Any) -> dict[str, Any]:
     cover = {
@@ -40,6 +50,7 @@ def igdb_game_factory(**overrides: Any) -> dict[str, Any]:
         "involved_companies": [igdb_involved_company_factory()],
         "name": "SuperTuxKart",
         "slug": "supertuxkart",
+        "external_games": [igdb_external_games_factory()]
     }
     game.update(overrides)
     return game

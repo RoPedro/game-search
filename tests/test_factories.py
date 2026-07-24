@@ -27,6 +27,9 @@ def test_igdb_games_response_json_factory_returns_valid_igdb_payload(
             ],
             "name": "SuperTuxKart",
             "slug": "supertuxkart",
+            "external_games": [
+                {"id": 113287, "external_game_source": {"id": 3, "name": "GiantBomb"}}
+            ],
         }
     ]
 
