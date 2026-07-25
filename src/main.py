@@ -43,15 +43,17 @@ async def gsearch(ctx, *, query: str):
     python will try to iterate on it, throwing an error. So we only assign a value
     if there's valid results. See commands.py:17
     """
-    embed = build_embed(result)
-    menu = build_menu(result)
 
-    if embed is not None:
+    if result is not None:
+        embed = build_embed(result)
+        menu = build_menu(result)
+        
         await ctx.send(embed=embed)
-        await ctx.send(view=menu)
+        if menu is not None: await ctx.send(view=menu)
 
         asyncio.create_task(send_prices(ctx, result))
     else:
+        log.error(f"Result returned as: {result}. If it is None, probably a invalid game")
         await ctx.send(embed=game_not_found)
 
 

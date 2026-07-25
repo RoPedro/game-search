@@ -1,12 +1,20 @@
+import logging
 from nextcord import Interaction, ui, SelectOption
 
 from src.commands import slug_search_command
 from core.utils import build_prices_embed
 from models.embeds import deals_not_found
+from config.logger import setup_logging
+
+setup_logging()
+log = logging.getLogger(__name__)
 
 
 class GamesDropdown(ui.Select):
     def __init__(self, games):
+        if games is None:
+            log.error("Game list is None")
+            return None
         self.games = games[1:]
         options = []
         for game in self.games:  # Skip first game since it's already shown in the embed
@@ -38,9 +46,9 @@ class GamesDropdown(ui.Select):
         if embed is not None:
             await interaction.response.defer(ephemeral=True)
             await interaction.followup.send(embed=embed)
-            
+
             prices = await build_prices_embed(game)
-            
+
             # If block needed because send() does not support None, therefore, interpreter complains.
             if prices is not None:
                 await interaction.followup.send(embed=prices)
