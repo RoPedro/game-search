@@ -1,5 +1,5 @@
 from datetime import datetime
-from models.game import Game
+from src.models.game import Game
 
 """
 DEPRECATION WARNING: under the hood, Nextcord uses `asyncio.iscoroutinefunction(value)` when importing it's
@@ -77,7 +77,7 @@ def assign_external_id(igdb_data):
 
 
 def build_menu(games):
-    from models.menu import GamesDropdown
+    from src.models.menu import GamesDropdown
     if len(games) >= 2:
         menu = ui.View()
         menu.add_item(GamesDropdown(games))

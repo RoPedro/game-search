@@ -6,7 +6,7 @@ from nextcord.ext import commands
 
 from core.health_handler import run_health_server
 from core.utils import build_embed, build_menu
-from models.embeds import game_not_found
+from src.models.embeds import game_not_found
 from src.controllers.embed_ctrl import send_prices
 from config.logger import setup_logging
 from config.env import TOKEN, prefix

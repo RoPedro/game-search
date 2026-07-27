@@ -1,5 +1,5 @@
 from core.utils import build_prices_embed
-from models.embeds import deals_not_found
+from src.models.embeds import deals_not_found
 
 
 async def send_prices(ctx, result):

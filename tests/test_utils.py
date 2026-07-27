@@ -1,5 +1,5 @@
 from core.utils import create_games_array, find_set_companies
-from models.game import Game
+from src.models.game import Game
 
 
 def test_find_set_companies_returns_developer_and_publisher(

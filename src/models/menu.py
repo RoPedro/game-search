@@ -3,7 +3,7 @@ from nextcord import Interaction, ui, SelectOption
 
 from src.commands import slug_search_command
 from core.utils import build_prices_embed
-from models.embeds import deals_not_found
+from src.models.embeds import deals_not_found
 from config.logger import setup_logging
 
 setup_logging()
