@@ -78,6 +78,7 @@ def assign_external_id(igdb_data):
 
 def build_menu(games):
     from src.models.menu import GamesDropdown
+
     if len(games) >= 2:
         menu = ui.View()
         menu.add_item(GamesDropdown(games))
@@ -105,22 +106,23 @@ def build_embed(games):
 
     return embed
 
+
 async def build_prices_embed(games):
+    from src.controllers.embed_ctrl import prices_embed_template
+
     result = get_itad_price(games.get_external_id())
-    
+
     if not result or result == "":
-        return None 
-    
-    current_price = result[0] # 0 = Current Price
-    hist_low = result[1] # 1 = Historical Low
-    slug = result[2] # 2 = Slug
-    
-    prices_embed = Embed(
-        title=f"💸Deals and price💸",
-        description=f"Current Price: {current_price["amount"]} ({current_price["cut"]}%)\n"
-                    f"Historical Low: {hist_low["amount"]} ({hist_low["cut"]}%)"
+        return None
+
+    current_price = result[0]  # 0 = Current Price
+    hist_low = result[1]  # 1 = Historical Low
+    slug = result[2]  # 2 = Slug
+
+    prices_embed = prices_embed_template(current_price, hist_low)
+    prices_embed.add_field(
+        name="Detailed prices", value=f"{ITAD_BASE_WEB_URL}/game/{slug}"
     )
-    prices_embed.add_field(name="Detailed prices", value=f"{ITAD_BASE_WEB_URL}/game/{slug}")
     prices_embed.set_footer(text=f"Data provided by isThereAnyDeal")
-    
+
     return prices_embed
