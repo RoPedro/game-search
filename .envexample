@@ -1,8 +1,10 @@
 TOKEN="BOT_TOKEN_HERE" # https://discord.com/developers/applications
-ENV="development/production"
 
 IGDB_CLIENT_ID="IGDB_CLIENT_ID_HERE" # https://dev.twitch.tv/console
 IGDB_TOKEN="IGDB_TOKEN_HERE" # https://api-docs.igdb.com/#authentication
 
 # isthereanydeal
 ITAD_TOKEN="ITAD_TOKEN_HERE" # https://isthereanydeal.com/apps/
+
+ENV="development/production" # Default: production
+LANG="US/BR" # Default: US
