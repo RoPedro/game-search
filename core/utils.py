@@ -6,10 +6,11 @@ DEPRECATION WARNING: under the hood, Nextcord uses `asyncio.iscoroutinefunction(
 functions, which will be removed in Python 3.16. Before considering updating to 3.16, check for this 
 compatibility issue on Nextcord.
 """
-from nextcord import Embed, ui
+from nextcord import ui
 import logging
 
 from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
+from config.env import lang_data
 
 log = logging.getLogger(__name__)
 
@@ -88,15 +89,11 @@ def build_menu(games):
 
 
 def build_embed(games):
-    embed = Embed(
-        title=games[0].get_title(),
-        description=f"Developer: {games[0].get_developer()}\nPublisher: {games[0].get_publisher()}\nRelease Date: {convert_date(games[0].get_release_date())}",
-        colour=int(
-            games[0].get_dominant_color(), 16
-        ),  # Need to specify 16 since we're passing a hexadecimal string
-    )
+    from src.controllers.embed_ctrl import game_embed_template
+
+    embed = game_embed_template(games)
     embed.set_image(url=games[0].get_small_thumb())
-    embed.set_footer(text="Data provided by IGDB")
+    embed.set_footer(text=lang_data["gameEmbed"]["embedFooter"])
 
     log.debug(f"Title: {games[0].get_title()}")
     log.debug(f"Small Thumb: {games[0].get_small_thumb()}")
@@ -121,8 +118,9 @@ async def build_prices_embed(games):
 
     prices_embed = prices_embed_template(current_price, hist_low)
     prices_embed.add_field(
-        name="Detailed prices", value=f"{ITAD_BASE_WEB_URL}/game/{slug}"
+        name=lang_data["pricesEmbed"]["detailedPricesHeader"],
+        value=f"{ITAD_BASE_WEB_URL}/game/{slug}",
     )
-    prices_embed.set_footer(text=f"Data provided by isThereAnyDeal")
+    prices_embed.set_footer(text=lang_data["pricesEmbed"]["dealsFooter"])
 
     return prices_embed

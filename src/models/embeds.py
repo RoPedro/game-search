@@ -2,14 +2,16 @@
 
 import nextcord
 
+from config.env import lang_data
+
 game_not_found = nextcord.Embed(
-    title="No Games Found",
-    description="No games matched your search. Try a different title or check your spelling.",
+    title=lang_data["gameNotFound"]["title"],
+    description=lang_data["gameNotFound"]["description"],
     color=nextcord.Color.red(),
 )
 
 deals_not_found = nextcord.Embed(  # TODO: Create error embeds in separate places
-    title="Error finding Deals",
-    description="Maybe it's not a PC game;\nCurrently, only PC is supported.",
+    title=lang_data["dealsNotFound"]["title"],
+    description=lang_data["dealsNotFound"]["description"],
     color=nextcord.Color.red(),
 )

@@ -5,6 +5,7 @@ from src.commands import slug_search_command
 from core.utils import build_prices_embed
 from src.models.embeds import deals_not_found
 from config.logger import setup_logging
+from config.env import lang_data
 
 setup_logging()
 log = logging.getLogger(__name__)
@@ -26,7 +27,7 @@ class GamesDropdown(ui.Select):
                 )
             )
         super().__init__(
-            placeholder="Select a game to view details",
+            placeholder=lang_data["gameDetailsMenu"]["placeholder"],
             min_values=1,
             max_values=1,
             options=options,
