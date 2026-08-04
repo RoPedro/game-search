@@ -25,7 +25,7 @@ def prices_embed_template(current_price, hist_low):
         title=lang_data["pricesEmbed"]["title"],
         # fmt: off
         description=f"{lang_data["pricesEmbed"]["currentPrice"]}: {current_price["amount"]} ({current_price["cut"]}%)\n"
-                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]} ({hist_low["cut"]}%)",
+                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]}",
         # fmt: on
     )
     return embed
