@@ -21,7 +21,6 @@ def get_itad_price(external_id):
     itad_id = game_data["game"]["id"]
     itad_slug = game_data["game"]["slug"]
 
-    
     price_r = requests.post(
         f"{ITAD_BASE_URL}/games/prices/v3",
         params={"country": LANG},
@@ -29,7 +28,7 @@ def get_itad_price(external_id):
         headers=auth_header,
     )
     price_data = json.loads(price_r.text)
-    
+
     current_price = {
         "amount": price_data[0]["deals"][0]["price"]["amount"],
         "cut": price_data[0]["deals"][0]["cut"],
@@ -37,6 +36,5 @@ def get_itad_price(external_id):
     hist_low = {
         "amount": price_data[0]["historyLow"]["y1"]["amount"],
     }
-    
+
     return current_price, hist_low, itad_slug
-        

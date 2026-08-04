@@ -22,7 +22,7 @@ class GamesDropdown(ui.Select):
             options.append(
                 SelectOption(
                     label=f"{game.get_title()}",
-                    value=game.get_slug(), # Every option needs a unique value or nextcord will refuse.
+                    value=game.get_slug(),  # Every option needs a unique value or nextcord will refuse.
                     description=game.get_year(),
                 )
             )
@@ -34,10 +34,10 @@ class GamesDropdown(ui.Select):
         )
 
     async def callback(self, interaction: Interaction) -> None:
-        '''
+        """
         IMPORTANT: nextcord ui.Select uses a value system that is what it's selected by the user
         if no value is provided, the default `value` value will be the same as in label.
-        '''
+        """
         selected_game = self.values[0]
         game = next(
             g for g in self.games if g.get_slug() == selected_game

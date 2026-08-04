@@ -48,13 +48,16 @@ async def gsearch(ctx, *, query: str):
     if result is not None:
         embed = build_embed(result)
         menu = build_menu(result)
-        
+
         await ctx.send(embed=embed)
-        if menu is not None: await ctx.send(view=menu)
+        if menu is not None:
+            await ctx.send(view=menu)
 
         asyncio.create_task(send_prices(ctx, result))
     else:
-        log.error(f"Result returned as: {result}. If it is None, probably a invalid game")
+        log.error(
+            f"Result returned as: {result}. If it is None, probably a invalid game"
+        )
         await ctx.send(embed=game_not_found)
 
 
@@ -72,7 +75,7 @@ async def on_command_error(ctx, error):
         log.error("Unhandled command error", exc_info=error)
 
 
-try: 
+try:
     bot.run(str(DISCORD_BOT_TOKEN))
 except LoginFailure:  # Avoids the app from hanging on a fail start
-    log.error("FAILED TO START: Invalid Bot Token")    
+    log.error("FAILED TO START: Invalid Bot Token")

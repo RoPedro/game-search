@@ -11,8 +11,8 @@ load_dotenv()
 def gsearch_command(query: str):
     LIMIT = 5
     query_fields = getFields()
-    
-    if query.endswith("remake") or query.endswith("remaster"): 
+
+    if query.endswith("remake") or query.endswith("remaster"):
         query = query.removesuffix("remake").removesuffix("remaster").strip()
         game_response = wrapper.api_request(
             "games",
@@ -21,7 +21,7 @@ def gsearch_command(query: str):
                 f'search "{query}";'
                 f"where game_type = (0, 8, 9);"
                 f"limit {LIMIT};"
-            )
+            ),
         )
     else:
         game_response = wrapper.api_request(
@@ -33,13 +33,13 @@ def gsearch_command(query: str):
                 f"limit {LIMIT};"
             ),
         )
-        
+
     igdb_data = json.loads(game_response)
     if igdb_data == []:
         return None
 
     games = create_games_array(igdb_data, limit=LIMIT)
-    
+
     # TODO: Study the possibility of wrapping all those functions into one `build_user_response`
     # Update, probably not viable since performance is not as I want to be
     return games
@@ -51,7 +51,7 @@ def slug_search_command(query: str):
     game_response = wrapper.api_request(
         "games", (f"fields {query_fields};" f'where slug = "{query}";')
     )
-    
+
     igdb_data = json.loads(game_response)
     if igdb_data == []:
         return None
