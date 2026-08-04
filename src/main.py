@@ -3,13 +3,14 @@ import threading
 import asyncio
 import nextcord
 from nextcord.ext import commands
+from nextcord.errors import LoginFailure
 
 from core.health_handler import run_health_server
 from core.utils import build_embed, build_menu
 from src.models.embeds import game_not_found
 from src.controllers.embed_ctrl import send_prices
 from config.logger import setup_logging
-from config.env import TOKEN, prefix
+from config.env import DISCORD_BOT_TOKEN, prefix
 
 # Thread the health server so it crashes gracefully with the main process
 threading.Thread(target=run_health_server, daemon=True).start()
@@ -71,4 +72,7 @@ async def on_command_error(ctx, error):
         log.error("Unhandled command error", exc_info=error)
 
 
-bot.run(str(TOKEN))
+try: 
+    bot.run(str(DISCORD_BOT_TOKEN))
+except LoginFailure:  # Avoids the app from hanging on a fail start
+    log.error("FAILED TO START: Invalid Bot Token")    

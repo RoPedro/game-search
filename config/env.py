@@ -13,7 +13,10 @@ load_dotenv()
 
 ENV = getenv("ENV")
 LANG = getenv("LANG")
-TOKEN = getenv("TOKEN")
+
+DISCORD_BOT_TOKEN = getenv("DISCORD_BOT_TOKEN")
+if DISCORD_BOT_TOKEN is None:
+    log.error("Discord Bot Token missing, it will be not able to connect to Discord")
 ITAD_TOKEN = getenv("ITAD_TOKEN")
 
 
