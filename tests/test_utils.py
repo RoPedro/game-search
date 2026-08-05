@@ -1,4 +1,4 @@
-from core.utils import create_games_array, find_set_companies
+from src.controllers.game_ctrl import create_games_array, find_set_companies
 from src.models.game import Game
 
 

@@ -2,8 +2,8 @@ import logging
 from nextcord import Interaction, ui, SelectOption
 
 from src.commands import slug_search_command
-from core.utils import build_prices_embed
 from src.models.embeds import deals_not_found
+from src.controllers.embed_ctrl import build_prices_embed
 from config.logger import setup_logging
 from config.env import lang_data
 

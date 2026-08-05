@@ -1,8 +1,27 @@
+import logging
 import nextcord
 
-from core.utils import build_prices_embed, convert_date
+from core.utils import convert_date
 from src.models.embeds import deals_not_found
 from config.env import lang_data
+from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
+from config.env import lang_data
+
+log = logging.getLogger(__name__)
+
+
+def build_embed(games):
+    embed = game_embed_template(games)
+    embed.set_image(url=games[0].get_small_thumb())
+    embed.set_footer(text=lang_data["gameEmbed"]["embedFooter"])
+
+    log.debug(f"Title: {games[0].get_title()}")
+    log.debug(f"Small Thumb: {games[0].get_small_thumb()}")
+    log.debug(f"Developer: {games[0].get_developer()}")
+    log.debug(f"Publisher: {games[0].get_publisher()}")
+    log.debug(f"Release Date: {convert_date(games[0].get_release_date())}")
+
+    return embed
 
 
 def game_embed_template(games):
@@ -37,3 +56,23 @@ async def send_prices(ctx, result):
         await ctx.send(embed=prices)
     else:
         await ctx.send(embed=deals_not_found)
+
+
+async def build_prices_embed(games):
+    result = get_itad_price(games.get_external_id())
+
+    if not result or result == "":
+        return None
+
+    current_price = result[0]  # 0 = Current Price
+    hist_low = result[1]  # 1 = Historical Low
+    slug = result[2]  # 2 = Slug
+
+    prices_embed = prices_embed_template(current_price, hist_low)
+    prices_embed.add_field(
+        name=lang_data["pricesEmbed"]["detailedPricesHeader"],
+        value=f"{ITAD_BASE_WEB_URL}/game/{slug}",
+    )
+    prices_embed.set_footer(text=lang_data["pricesEmbed"]["dealsFooter"])
+
+    return prices_embed

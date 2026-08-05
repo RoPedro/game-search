@@ -6,9 +6,10 @@ from nextcord.ext import commands
 from nextcord.errors import LoginFailure
 
 from core.health_handler import run_health_server
-from core.utils import build_embed, build_menu
+from src.controllers.embed_ctrl import build_embed
 from src.models.embeds import game_not_found
 from src.controllers.embed_ctrl import send_prices
+from src.controllers.menu_ctrl import build_menu
 from config.logger import setup_logging
 from config.env import DISCORD_BOT_TOKEN, prefix
 
