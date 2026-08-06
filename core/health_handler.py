@@ -7,10 +7,11 @@ class HealthHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b"OK")
-       
+
     # Silent logs
     def log_message(self, format: str, *args: Any) -> None:
         return
-    
-def run_health_server(): 
+
+
+def run_health_server():
     HTTPServer(("0.0.0.0", 8080), HealthHandler).serve_forever()

@@ -22,7 +22,9 @@ def igdb_involved_company_factory(**overrides: Any) -> dict[str, Any]:
     involved_company.update(overrides)
     return involved_company
 
+
 def igdb_external_games_factory(**overrides: Any) -> dict[str, Any]:
+    # fmt: off
     external_game = {
         "id": 113287,
         "external_game_source": {
@@ -30,8 +32,10 @@ def igdb_external_games_factory(**overrides: Any) -> dict[str, Any]:
             "name": "GiantBomb"
         }
     }
+    # fmt: on
     external_game.update(overrides)
     return external_game
+
 
 def igdb_cover_factory(**overrides: Any) -> dict[str, Any]:
     cover = {
@@ -50,7 +54,7 @@ def igdb_game_factory(**overrides: Any) -> dict[str, Any]:
         "involved_companies": [igdb_involved_company_factory()],
         "name": "SuperTuxKart",
         "slug": "supertuxkart",
-        "external_games": [igdb_external_games_factory()]
+        "external_games": [igdb_external_games_factory()],
     }
     game.update(overrides)
     return game
@@ -61,7 +65,9 @@ def igdb_games_response_factory(
 ) -> list[dict[str, Any]]:
     if games is None:
         games = [igdb_game_factory()]
-    return deepcopy(games) # A separate copy of the base game factory it's reusable in multiple different tests.
+    return deepcopy(
+        games
+    )  # A separate copy of the base game factory it's reusable in multiple different tests.
 
 
 def igdb_games_response_json_factory(

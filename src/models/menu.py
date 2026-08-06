@@ -2,9 +2,10 @@ import logging
 from nextcord import Interaction, ui, SelectOption
 
 from src.commands import slug_search_command
-from core.utils import build_prices_embed
-from models.embeds import deals_not_found
+from src.models.embeds import deals_not_found
+from src.controllers.embed_ctrl import build_prices_embed
 from config.logger import setup_logging
+from config.env import lang_data
 
 setup_logging()
 log = logging.getLogger(__name__)
@@ -21,20 +22,25 @@ class GamesDropdown(ui.Select):
             options.append(
                 SelectOption(
                     label=f"{game.get_title()}",
+                    value=game.get_slug(),  # Every option needs a unique value or nextcord will refuse.
                     description=game.get_year(),
                 )
             )
         super().__init__(
-            placeholder="Select a game to view details",
+            placeholder=lang_data["gameDetailsMenu"]["placeholder"],
             min_values=1,
             max_values=1,
             options=options,
         )
 
     async def callback(self, interaction: Interaction) -> None:
+        """
+        IMPORTANT: nextcord ui.Select uses a value system that is what it's selected by the user
+        if no value is provided, the default `value` value will be the same as in label.
+        """
         selected_game = self.values[0]
         game = next(
-            g for g in self.games if g.get_title() == selected_game
+            g for g in self.games if g.get_slug() == selected_game
         )  # loops games until match by title
 
         embed = slug_search_command(str(game.get_slug()))

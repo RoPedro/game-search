@@ -1,0 +1,29 @@
+{
+    "gameEmbed": {
+        "developerField": "Desenvolvedor(a)",
+        "publisherField": "Publisher",
+        "releaseDateField": "Data de Lançamento",
+        "embedFooter": "Informações por IGDB"
+    },
+    "pricesEmbed": {
+        "title": "💸Preços e Promoções💸",
+        "currentPrice": "Preço Atual",
+        "historicalLow": "Baixa Histórica",
+        "detailedPricesHeader": "Preços Detalhados",
+        "dealsFooter": "Promoções por isThereAnyDeal"
+    },
+    "gameNotFound": {
+        "title": "Jogo não encontrado",
+        "description": "Nenhum jogo coincidiu com sua busca. Tente outro título ou verifique por erros de escrita."
+    },
+    "dealsNotFound": {
+        "title": "Nenhuma promoção encontrada",
+        "description": "Talvez não seja um jogo de PC;\nAtualmente, apenas promoções de PC são suportadas."
+    },
+    "gameDetailsMenu": {
+        "placeholder": "Selecione um jogo para ver detalhes"
+    },
+    "testMessage": {
+        "message": "Rodando no idioma BR"
+    }
+}

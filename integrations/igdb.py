@@ -10,9 +10,10 @@ query_fields = [
     "external_games.uid",
 ]
 
+
 def getFields():
     fields = query_fields[0]
     for field in query_fields[1:]:
         fields = fields + f", {field}"
-        
+
     return fields
