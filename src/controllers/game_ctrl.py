@@ -47,11 +47,25 @@ def find_set_companies(igdb_data):
     return developer, publisher
 
 
+# fmt: off
+"""
+The `found` variable is important not only for optimization purposes, but also
+because there can be multiple records under the same platform — for example,
+the same game on Steam can have two external IDs. IGDB typically handles this
+by placing the valid one first, so we exit as soon as we find it.
+"""
+# fmt: on
 def assign_external_id(igdb_data):
     external_id = ""
+    found = False
+
     log.debug(igdb_data["slug"])
+
     for ex_game in igdb_data["external_games"]:
         if (ex_game["external_game_source"]["name"]) == "Steam":
+            found = True
             external_id = ex_game["uid"]
+        if found == True:
+            break
 
     return external_id
