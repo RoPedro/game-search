@@ -52,7 +52,7 @@ def prices_embed_template(current_price, hist_low):
 
 async def send_prices(ctx, result):
     prices = await build_prices_embed(result[0])
-    if prices is not "" and prices is not None:
+    if prices != "" and prices is not None:
         await ctx.send(embed=prices)
     else:
         await ctx.send(embed=deals_not_found)
