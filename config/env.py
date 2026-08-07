@@ -12,7 +12,6 @@ log = logging.getLogger(__name__)
 load_dotenv()
 
 ENV = getenv("ENV")
-LANG = getenv("LANG")
 
 DISCORD_BOT_TOKEN = getenv("DISCORD_BOT_TOKEN")
 if DISCORD_BOT_TOKEN is None:
@@ -20,6 +19,7 @@ if DISCORD_BOT_TOKEN is None:
 ITAD_TOKEN = getenv("ITAD_TOKEN")
 
 
+LANG = getenv("LANG")
 if LANG in LANGS:
     with open(f"src/translations/{LANG}.json", "r") as translation_file:
         lang_data = json.load(translation_file)
