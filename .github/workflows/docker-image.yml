@@ -15,6 +15,6 @@ jobs:
       - name: Build the Docker image
         run: docker build --tag ${{ vars.IMAGE_NAME }}:latest .
       - name: Login to Dockerhub
-        run: docker login -u pedrolrmoreira -p ${{ secrets.DOCKERHUB_TK }}
+        run: docker login -u ${{ vars.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TK }}
       - name: Push to dockerhub
         run: docker push ${{ vars.IMAGE_NAME }}
