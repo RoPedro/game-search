@@ -1,6 +1,6 @@
 import pytest
 
-from tests.factories import (
+from tests.factories.igdb_factories import (
     igdb_company_factory,
     igdb_cover_factory,
     igdb_game_factory,
