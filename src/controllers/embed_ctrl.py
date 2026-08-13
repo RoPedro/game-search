@@ -5,7 +5,7 @@ from core.utils import convert_date
 from src.models.embeds import deals_not_found
 from config.env import lang_data
 from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
-from config.env import lang_data
+from config.env import lang_data, ITAD_TOKEN
 
 log = logging.getLogger(__name__)
 
@@ -59,9 +59,11 @@ async def send_prices(ctx, result):
 
 
 async def build_prices_embed(games):
-    result = get_itad_price(games.get_external_id())
+    result = get_itad_price(games.get_external_id(), ITAD_TOKEN)
+    log.debug(f"ITAD Result: {result}")   
 
     if not result or result == "":
+        log.warning(f"isThereAnyDeal returned None, No deals found")
         return None
 
     current_price = result[0]  # 0 = Current Price
