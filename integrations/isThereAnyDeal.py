@@ -4,7 +4,6 @@ from config.env import LANG
 ITAD_BASE_URL = "https://api.isthereanydeal.com"
 ITAD_BASE_WEB_URL = "https://isthereanydeal.com"
 ITAD_ICON = "https://isthereanydeal.com/public/assets/logo-GBHE6XF2.svg"
-ITAD_GAME_LOOKUP_URL = ""
 
 log = logging.getLogger(__name__)
 
