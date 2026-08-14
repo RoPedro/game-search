@@ -1,11 +1,11 @@
 [project]
 name = "GameSearch"
-version = "1.0.3"
+version = "1.0.4"
 authors = [{ name = "Pedro Moreira", email = "pedro.lucas.rocha72@gmail.com" }]
 description = "A Discord bot that allows users to search for games using the IGDB API and view prices using isThereAnyDeal API."
 readme = "README.md"
 requires-python = "==3.14.*"
-dependencies = ["igdb-api-v4", "python-dotenv", "requests", "nextcord"]
+dependencies = ["igdb-api-v4", "python-dotenv", "requests", "nextcord", "pillow", "pytest"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

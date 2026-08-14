@@ -9,6 +9,7 @@ from tests.factories.igdb_factories import (
     igdb_games_response_json_factory,
     igdb_involved_company_factory,
 )
+from tests.factories.itad_factories import itad_valid_prices_payload
 
 
 @pytest.fixture
@@ -44,3 +45,7 @@ def igdb_games_response_json():
 @pytest.fixture
 def igdb_involved_company():
     return igdb_involved_company_factory
+
+@pytest.fixture
+def itad_valid_response_json():
+    return itad_valid_prices_payload

@@ -13,12 +13,15 @@ load_dotenv()
 
 ENV = getenv("ENV")
 
+# Discord Token Configuration
 DISCORD_BOT_TOKEN = getenv("DISCORD_BOT_TOKEN")
 if DISCORD_BOT_TOKEN is None:
     log.error("Discord Bot Token missing, it will be not able to connect to Discord")
+
 ITAD_TOKEN = getenv("ITAD_TOKEN")
 
 
+# Language configuration
 LANG = getenv("LANG")
 if LANG in LANGS:
     with open(f"src/translations/{LANG}.json", "r") as translation_file:
@@ -40,3 +43,4 @@ else:
 prefix = "?"
 if ENV == "development":
     prefix = "."
+

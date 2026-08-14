@@ -1,4 +1,14 @@
-{
+{   
+    "embeds": {
+        "invalidApiKey": {
+            "title": "❌ ERROR: Incorrect isThereAnyDeal API Key",
+            "description": "Contact the bot administrator for help"
+        },
+        "unknownError": {
+            "title": "❌ ERROR: Unknown error",
+            "description": "Contact the bot administrator for help"
+        }
+    },
     "gameEmbed": {
         "developerField": "Developer",
         "publisherField": "Publisher",

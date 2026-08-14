@@ -11,7 +11,8 @@ from src.models.embeds import game_not_found
 from src.controllers.embed_ctrl import send_prices
 from src.controllers.menu_ctrl import build_menu
 from config.logger import setup_logging
-from config.env import DISCORD_BOT_TOKEN, prefix
+from config.env import DISCORD_BOT_TOKEN, ITAD_TOKEN, prefix
+from integrations.isThereAnyDeal import isThereAnyDeal_config
 
 # Thread the health server so it crashes gracefully with the main process
 threading.Thread(target=run_health_server, daemon=True).start()
@@ -54,7 +55,9 @@ async def gsearch(ctx, *, query: str):
         if menu is not None:
             await ctx.send(view=menu)
 
-        asyncio.create_task(send_prices(ctx, result))
+        itad_enabled = isThereAnyDeal_config(ITAD_TOKEN)
+        if itad_enabled == True:
+            asyncio.create_task(send_prices(ctx, result))
     else:
         log.error(
             f"Result returned as: {result}. If it is None, probably a invalid game"
