@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 
 
 def isThereAnyDeal_config(ITAD_TOKEN):
-    itad_enabled = False 
+    itad_enabled = False
     if ITAD_TOKEN is not None:
         itad_enabled = True
     else:
@@ -26,10 +26,13 @@ def get_itad_price(external_id, ITAD_TOKEN):
         params={"appid": external_id},
         headers=auth_header,
     )
+    if r.status_code != 200:
+        log.error(f"{r.content}")
+        return r.status_code
 
     game_data = json.loads(r.text)
     if game_data["found"] == False:
-        return ""
+        return None
     itad_id = game_data["game"]["id"]
     itad_slug = game_data["game"]["slug"]
 
@@ -48,5 +51,6 @@ def get_itad_price(external_id, ITAD_TOKEN):
     hist_low = {
         "amount": price_data[0]["historyLow"]["y1"]["amount"],
     }
+    regular_price = price_data[0]["deals"][0]["regular"]["amount"]
 
-    return current_price, hist_low, itad_slug
+    return current_price, hist_low, regular_price, itad_slug

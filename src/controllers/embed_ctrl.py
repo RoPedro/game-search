@@ -2,7 +2,7 @@ import logging
 import nextcord
 
 from core.utils import convert_date
-from src.models.embeds import deals_not_found
+from src.models.embeds import deals_not_found, invalid_itad_key, unknown_error
 from config.env import lang_data
 from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
 from config.env import lang_data, ITAD_TOKEN
@@ -39,12 +39,12 @@ def game_embed_template(games):
     return embed
 
 
-def prices_embed_template(current_price, hist_low):
+def prices_embed_template(current_price, hist_low, hist_low_cut: int):
     embed = nextcord.Embed(
         title=lang_data["pricesEmbed"]["title"],
         # fmt: off
         description=f"{lang_data["pricesEmbed"]["currentPrice"]}: {current_price["amount"]} ({current_price["cut"]}%)\n"
-                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]}",
+                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]} ({hist_low_cut}%)",
         # fmt: on
     )
     return embed
@@ -52,25 +52,36 @@ def prices_embed_template(current_price, hist_low):
 
 async def send_prices(ctx, result):
     prices = await build_prices_embed(result[0])
-    if prices != "" and prices is not None:
+    
+    if isinstance(prices, nextcord.Embed):
         await ctx.send(embed=prices)
-    else:
+    elif prices == 403:  # API Response to invalid key
+        await ctx.send(embed=invalid_itad_key)
+    elif isinstance(prices, int):
+        await ctx.send(embed=unknown_error)
+    else:  # Triggers mainly when ITAD connects, but no deals is found (e.g. Switch games)
         await ctx.send(embed=deals_not_found)
 
 
 async def build_prices_embed(games):
     result = get_itad_price(games.get_external_id(), ITAD_TOKEN)
-    log.debug(f"ITAD Result: {result}")   
+    log.debug(f"ITAD Result: {result}")
 
+    if isinstance(result, int):
+        return result
     if not result or result == "":
         log.warning(f"isThereAnyDeal returned None, No deals found")
         return None
 
     current_price = result[0]  # 0 = Current Price
     hist_low = result[1]  # 1 = Historical Low
-    slug = result[2]  # 2 = Slug
+    regular_price = result[2]  # 2 = Regular Price
+    slug = result[3]  # 3 = Slug
+    cut = (
+        (regular_price - float(hist_low["amount"])) / regular_price
+    ) * 100  # Get discount amount in %
 
-    prices_embed = prices_embed_template(current_price, hist_low)
+    prices_embed = prices_embed_template(current_price, hist_low, int(cut))
     prices_embed.add_field(
         name=lang_data["pricesEmbed"]["detailedPricesHeader"],
         value=f"{ITAD_BASE_WEB_URL}/game/{slug}",

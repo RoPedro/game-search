@@ -1,4 +1,14 @@
 {
+    "embeds": {
+        "invalidApiKey": {
+            "title": "❌ ERRO: Chave de API de isThereAnyDeal está incorreta",
+            "description": "Contate um administrador para suporte"
+        },
+        "unknownError": {
+            "title": "❌ ERROR: Erro desconhecido",
+            "description": "Contate um administrador para suporte"
+        }
+    },
     "gameEmbed": {
         "developerField": "Desenvolvedor(a)",
         "publisherField": "Publisher",
