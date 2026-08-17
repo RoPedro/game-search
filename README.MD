@@ -12,7 +12,7 @@ docker run \
 -e IGDB_CLIENT_ID="IGDB_CLIENT_ID" \
 -e IGDB_TOKEN="IGDB_TOKEN_HERE" \
 -e ITAD_TOKEN="ITAD_TOKEN_HERE" \
--e LANG="US"
+-e LANG="US" \
 pedrolrmoreira/game-search
 ```
 
