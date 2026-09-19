@@ -1,3 +1,6 @@
+# ATTENTION!!!!!
+# This is a comment, don't forget to remove those and any other commments if copy-pasting this template.
+
 DISCORD_BOT_TOKEN="BOT_TOKEN_HERE" # https://discord.com/developers/applications
 
 IGDB_CLIENT_ID="IGDB_CLIENT_ID_HERE" # https://dev.twitch.tv/console
