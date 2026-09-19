@@ -1,11 +1,11 @@
 import logging
+
 import nextcord
 
+from config.env import ITAD_TOKEN, lang_data
 from core.utils import convert_date
+from integrations.isThereAnyDeal import ITAD_BASE_WEB_URL, get_itad_price
 from src.models.embeds import deals_not_found, invalid_itad_key, unknown_error
-from config.env import lang_data
-from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
-from config.env import lang_data, ITAD_TOKEN
 
 log = logging.getLogger(__name__)
 
@@ -52,7 +52,7 @@ def prices_embed_template(current_price, hist_low, hist_low_cut: int):
 
 async def send_prices(ctx, result):
     prices = await build_prices_embed(result[0])
-    
+
     if isinstance(prices, nextcord.Embed):
         await ctx.send(embed=prices)
     elif prices == 403:  # API Response to invalid key
@@ -70,7 +70,7 @@ async def build_prices_embed(games):
     if isinstance(result, int):
         return result
     if not result or result == "":
-        log.warning(f"isThereAnyDeal returned None, No deals found")
+        log.warning("isThereAnyDeal returned None, No deals found")
         return None
 
     current_price = result[0]  # 0 = Current Price

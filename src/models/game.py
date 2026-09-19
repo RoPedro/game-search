@@ -51,8 +51,9 @@ class Game:
         return self.dominant_color
 
     def find_dominant_color(self):
-        import requests
         from io import BytesIO
+
+        import requests
         from PIL import Image
 
         url = self.get_small_thumb()

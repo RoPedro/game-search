@@ -1,11 +1,12 @@
 import logging
-from nextcord import Interaction, ui, SelectOption
 
-from src.commands import slug_search_command
-from src.models.embeds import deals_not_found
-from src.controllers.embed_ctrl import build_prices_embed
-from config.logger import setup_logging
+from nextcord import Interaction, SelectOption, ui
+
 from config.env import lang_data
+from config.logger import setup_logging
+from src.commands import slug_search_command
+from src.controllers.embed_ctrl import build_prices_embed
+from src.models.embeds import deals_not_found
 
 setup_logging()
 log = logging.getLogger(__name__)
@@ -15,7 +16,7 @@ class GamesDropdown(ui.Select):
     def __init__(self, games):
         if games is None:
             log.error("Game list is None")
-            return None
+            return
         self.games = games[1:]
         options = []
         for game in self.games:  # Skip first game since it's already shown in the embed

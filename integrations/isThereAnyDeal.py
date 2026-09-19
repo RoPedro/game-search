@@ -1,4 +1,8 @@
-import requests, json, logging
+import json
+import logging
+
+import requests
+
 from config.env import LANG
 
 ITAD_BASE_URL = "https://api.isthereanydeal.com"

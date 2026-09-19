@@ -1,10 +1,11 @@
-from dotenv import load_dotenv
 import json
 
-from src.controllers.embed_ctrl import build_embed
-from src.controllers import game_ctrl
+from dotenv import load_dotenv
+
 from core.igdb_auth import wrapper
 from integrations.igdb import getFields
+from src.controllers import game_ctrl
+from src.controllers.embed_ctrl import build_embed
 
 load_dotenv()
 
