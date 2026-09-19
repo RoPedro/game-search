@@ -67,10 +67,9 @@ async def build_prices_embed(games):
     result = get_itad_price(games.get_external_id(), ITAD_TOKEN)
     log.debug(f"ITAD Result: {result}")
 
-    if isinstance(result, int):
-        return result
-    if not result or result == "":
+    if not result or result == "" or isinstance(result, int):
         log.warning("isThereAnyDeal returned None, No deals found")
+        log.debug(f"RESULT VALUE: {result}")
         return None
 
     current_price = result[0]  # 0 = Current Price
