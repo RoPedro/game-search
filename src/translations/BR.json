@@ -28,7 +28,8 @@
     },
     "dealsNotFound": {
         "title": "Nenhuma promoção encontrada",
-        "description": "Talvez não seja um jogo de PC;\nAtualmente, apenas promoções de PC são suportadas."
+        "description": "Talvez não seja um jogo de PC;\nAtualmente, apenas promoções de PC são suportadas;",
+        "linkTip": "Consulta manual"
     },
     "gameDetailsMenu": {
         "placeholder": "Selecione um jogo para ver detalhes"

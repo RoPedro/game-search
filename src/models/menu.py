@@ -6,7 +6,7 @@ from config.env import lang_data
 from config.logger import setup_logging
 from src.commands import slug_search_command
 from src.controllers.embed_ctrl import build_prices_embed
-from src.models.embeds import deals_not_found
+from src.models.embeds import deals_not_found_template
 
 setup_logging()
 log = logging.getLogger(__name__)
@@ -60,7 +60,7 @@ class GamesDropdown(ui.Select):
             if prices is not None:
                 await interaction.followup.send(embed=prices)
             else:
-                await interaction.followup.send(embed=deals_not_found)
+                await interaction.followup.send(embed=deals_not_found_template(game.slug))
         else:
             await interaction.response.send_message(
                 "An error ocurred. Please try again."

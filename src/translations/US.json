@@ -28,7 +28,8 @@
     },
     "dealsNotFound": {
         "title": "Error finding deals",
-        "description": "Maybe it's not a PC game;\nCurrently, only PC is supported."
+        "description": "Maybe it's not a PC game;\nCurrently, only PC is supported.",
+        "linkTip": "Manual search"
     },
     "gameDetailsMenu": {
         "placeholder": "Select a game to view details"

@@ -5,7 +5,12 @@ import nextcord
 from config.env import ITAD_TOKEN, lang_data
 from core.utils import convert_date
 from integrations.isThereAnyDeal import ITAD_BASE_WEB_URL, get_itad_price
-from src.models.embeds import deals_not_found, invalid_itad_key, unknown_error
+from src.models.embeds import (
+    deals_not_found_template,
+    invalid_itad_key,
+    prices_embed_template,
+    unknown_error,
+)
 
 log = logging.getLogger(__name__)
 
@@ -39,17 +44,6 @@ def game_embed_template(games):
     return embed
 
 
-def prices_embed_template(current_price, hist_low, hist_low_cut: int):
-    embed = nextcord.Embed(
-        title=lang_data["pricesEmbed"]["title"],
-        # fmt: off
-        description=f"{lang_data["pricesEmbed"]["currentPrice"]}: {current_price["amount"]} ({current_price["cut"]}%)\n"
-                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]} ({hist_low_cut}%)",
-        # fmt: on
-    )
-    return embed
-
-
 async def send_prices(ctx, result):
     prices = await build_prices_embed(result[0])
 
@@ -60,7 +54,7 @@ async def send_prices(ctx, result):
     elif isinstance(prices, int):
         await ctx.send(embed=unknown_error)
     else:  # Triggers mainly when ITAD connects, but no deals is found (e.g. Switch games)
-        await ctx.send(embed=deals_not_found)
+        await ctx.send(embed=deals_not_found_template(result[0].slug))
 
 
 async def build_prices_embed(games):

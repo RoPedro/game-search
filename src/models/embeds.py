@@ -23,8 +23,25 @@ invalid_itad_key = nextcord.Embed(
     color=nextcord.Color.red(),
 )
 
-deals_not_found = nextcord.Embed(  # TODO: Create error embeds in separate places
-    title=lang_data["dealsNotFound"]["title"],
-    description=lang_data["dealsNotFound"]["description"],
-    color=nextcord.Color.red(),
-)
+def deals_not_found_template(title_slug):
+    embed = nextcord.Embed(  # TODO: Create error embeds in separate places
+        title=lang_data["dealsNotFound"]["title"],
+        description=lang_data["dealsNotFound"]["description"],
+        color=nextcord.Color.red(),
+    )
+    embed.add_field(
+        name=lang_data["dealsNotFound"]["linkTip"],
+        value=f"https://google.com/search?q=isthereanydeal-{title_slug}"
+    )
+    return embed
+
+
+def prices_embed_template(current_price, hist_low, hist_low_cut: int):
+    embed = nextcord.Embed(
+        title=lang_data["pricesEmbed"]["title"],
+        # fmt: off
+        description=f"{lang_data["pricesEmbed"]["currentPrice"]}: {current_price["amount"]} ({current_price["cut"]}%)\n"
+                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]} ({hist_low_cut}%)",
+        # fmt: on
+    )
+    return embed
