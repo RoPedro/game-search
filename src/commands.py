@@ -14,7 +14,7 @@ def gsearch_command(query: str):
     LIMIT = 5
     query_fields = getFields()
 
-    if query.endswith("remake") or query.endswith("remaster"):
+    if query.endswith(("remake", "remaster")):
         query = query.removesuffix("remake").removesuffix("remaster").strip()
         game_response = wrapper.api_request(
             "games",
