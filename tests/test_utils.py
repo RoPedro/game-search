@@ -1,3 +1,4 @@
+from core.utils import convert_date
 from src.controllers.game_ctrl import create_games_array, find_set_companies
 from src.models.game import Game
 
@@ -26,6 +27,12 @@ def test_find_set_companies_returns_developer_and_publisher(
 
     assert developer == "Developer Studio"
     assert publisher == "Publisher Studio"
+
+
+def test_release_date_conversion_should_be_utc():
+    target_timestamp = 1790042400  # Sep 22 2026 01:00:00 GMT+0000
+    converted_date = convert_date(target_timestamp)
+    assert converted_date == "22/09/2026"
 
 
 def test_create_games_array_maps_igdb_payload_to_games(

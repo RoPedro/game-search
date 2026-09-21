@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 """
 DEPRECATION WARNING: under the hood, Nextcord uses `asyncio.iscoroutinefunction(value)` when importing it's
@@ -16,6 +16,6 @@ def convert_date(date_stamp):
     if date_stamp is None:
         return "Unknown"
     try:
-        return datetime.fromtimestamp(date_stamp).strftime("%d/%m/%Y")
+        return datetime.fromtimestamp(date_stamp, tz=UTC).strftime("%d/%m/%Y")
     except ValueError:
         return None

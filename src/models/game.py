@@ -1,3 +1,6 @@
+from datetime import UTC, datetime
+
+
 class Game:
     def __init__(
         self,
@@ -39,10 +42,9 @@ class Game:
         return self.release_date
 
     def get_year(self):
-        from datetime import datetime
 
         dt_stamp = self.release_date
-        return datetime.fromtimestamp(dt_stamp).strftime("%Y")  # type: ignore
+        return datetime.fromtimestamp(dt_stamp, tz=UTC).strftime("%Y")  # type: ignore
 
     def get_small_thumb(self):
         return self.small_thumb
