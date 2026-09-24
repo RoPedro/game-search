@@ -13,7 +13,7 @@ def test_igdb_games_response_json_factory_returns_valid_igdb_payload(
                 "id": 117991,
                 "url": "//images.igdb.com/igdb/image/upload/t_thumb/co2j1j.jpg",
             },
-            "first_release_date": 1159228800,
+            "first_release_date": 1159228800, # 26/09/2006-00:00:00 UTC/GMT
             "involved_companies": [
                 {
                     "id": 84780,

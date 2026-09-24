@@ -1,6 +1,7 @@
-from igdb.wrapper import IGDBWrapper
-from dotenv import load_dotenv
 from os import getenv
+
+from dotenv import load_dotenv
+from igdb.wrapper import IGDBWrapper
 
 load_dotenv()
 

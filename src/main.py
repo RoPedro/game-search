@@ -1,18 +1,18 @@
+import asyncio
 import logging
 import threading
-import asyncio
-import nextcord
-from nextcord.ext import commands
-from nextcord.errors import LoginFailure
 
-from core.health_handler import run_health_server
-from src.controllers.embed_ctrl import build_embed
-from src.models.embeds import game_not_found
-from src.controllers.embed_ctrl import send_prices
-from src.controllers.menu_ctrl import build_menu
-from config.logger import setup_logging
+import nextcord
+from nextcord.errors import LoginFailure
+from nextcord.ext import commands
+
 from config.env import DISCORD_BOT_TOKEN, ITAD_TOKEN, prefix
+from config.logger import setup_logging
+from core.health_handler import run_health_server
 from integrations.isThereAnyDeal import isThereAnyDeal_config
+from src.controllers.embed_ctrl import build_embed, send_prices
+from src.controllers.menu_ctrl import build_menu
+from src.models.embeds import game_not_found
 
 # Thread the health server so it crashes gracefully with the main process
 threading.Thread(target=run_health_server, daemon=True).start()

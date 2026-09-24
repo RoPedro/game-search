@@ -1,11 +1,16 @@
 import logging
+
 import nextcord
 
+from config.env import ITAD_TOKEN, lang_data
 from core.utils import convert_date
-from src.models.embeds import deals_not_found, invalid_itad_key, unknown_error
-from config.env import lang_data
-from integrations.isThereAnyDeal import get_itad_price, ITAD_BASE_WEB_URL
-from config.env import lang_data, ITAD_TOKEN
+from integrations.isThereAnyDeal import ITAD_BASE_WEB_URL, get_itad_price
+from src.models.embeds import (
+    deals_not_found_template,
+    invalid_itad_key,
+    prices_embed_template,
+    unknown_error,
+)
 
 log = logging.getLogger(__name__)
 
@@ -39,20 +44,9 @@ def game_embed_template(games):
     return embed
 
 
-def prices_embed_template(current_price, hist_low, hist_low_cut: int):
-    embed = nextcord.Embed(
-        title=lang_data["pricesEmbed"]["title"],
-        # fmt: off
-        description=f"{lang_data["pricesEmbed"]["currentPrice"]}: {current_price["amount"]} ({current_price["cut"]}%)\n"
-                    f"{lang_data["pricesEmbed"]["historicalLow"]}: {hist_low["amount"]} ({hist_low_cut}%)",
-        # fmt: on
-    )
-    return embed
-
-
 async def send_prices(ctx, result):
     prices = await build_prices_embed(result[0])
-    
+
     if isinstance(prices, nextcord.Embed):
         await ctx.send(embed=prices)
     elif prices == 403:  # API Response to invalid key
@@ -60,17 +54,16 @@ async def send_prices(ctx, result):
     elif isinstance(prices, int):
         await ctx.send(embed=unknown_error)
     else:  # Triggers mainly when ITAD connects, but no deals is found (e.g. Switch games)
-        await ctx.send(embed=deals_not_found)
+        await ctx.send(embed=deals_not_found_template(result[0].slug))
 
 
 async def build_prices_embed(games):
     result = get_itad_price(games.get_external_id(), ITAD_TOKEN)
     log.debug(f"ITAD Result: {result}")
 
-    if isinstance(result, int):
-        return result
-    if not result or result == "":
-        log.warning(f"isThereAnyDeal returned None, No deals found")
+    if not result or result == "" or isinstance(result, int):
+        log.warning("isThereAnyDeal returned None, No deals found")
+        log.debug(f"RESULT VALUE: {result}")
         return None
 
     current_price = result[0]  # 0 = Current Price

@@ -3,8 +3,8 @@ import pytest
 from tests.factories.igdb_factories import (
     igdb_company_factory,
     igdb_cover_factory,
-    igdb_game_factory,
     igdb_external_games_factory,
+    igdb_game_factory,
     igdb_games_response_factory,
     igdb_games_response_json_factory,
     igdb_involved_company_factory,

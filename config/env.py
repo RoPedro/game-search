@@ -1,10 +1,11 @@
+import json
 import logging
 from os import getenv
-from dotenv import load_dotenv
-import json
 
-from src.translations.langs import LANGS
+from dotenv import load_dotenv
+
 from config.logger import setup_logging
+from src.translations.langs import LANGS
 
 setup_logging()
 log = logging.getLogger(__name__)

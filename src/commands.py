@@ -1,10 +1,11 @@
-from dotenv import load_dotenv
 import json
 
-from src.controllers.embed_ctrl import build_embed
-from src.controllers import game_ctrl
+from dotenv import load_dotenv
+
 from core.igdb_auth import wrapper
 from integrations.igdb import getFields
+from src.controllers import game_ctrl
+from src.controllers.embed_ctrl import build_embed
 
 load_dotenv()
 
@@ -13,7 +14,7 @@ def gsearch_command(query: str):
     LIMIT = 5
     query_fields = getFields()
 
-    if query.endswith("remake") or query.endswith("remaster"):
+    if query.endswith(("remake", "remaster")):
         query = query.removesuffix("remake").removesuffix("remaster").strip()
         game_response = wrapper.api_request(
             "games",
