@@ -1,4 +1,4 @@
-from integrations.isThereAnyDeal import isThereAnyDeal_config
+from integrations.is_there_any_deal import isThereAnyDeal_config
 
 
 def test_itad_should_not_be_enabled_with_empty_token():

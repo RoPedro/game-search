@@ -1,7 +1,7 @@
 import logging
 
 from config.env import ITAD_TOKEN
-from integrations.isThereAnyDeal import itad_mock
+from integrations.is_there_any_deal import itad_mock
 from src.models.game import Game
 
 log = logging.getLogger(__name__)
