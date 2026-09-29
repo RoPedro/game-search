@@ -1,5 +1,7 @@
 import logging
 
+from config.env import ITAD_TOKEN
+from integrations.isThereAnyDeal import itad_mock
 from src.models.game import Game
 
 log = logging.getLogger(__name__)
@@ -7,12 +9,15 @@ log = logging.getLogger(__name__)
 
 def create_games_array(igdb_data, limit):
     games = []
+    is_first_game = False
     for game in range(limit):  # Limit = number of games to show, default is 4.
+        if not len(games):
+            is_first_game = True
         try:
             data_developer, data_publisher = find_set_companies(
                 igdb_data[game]
             )  # send the index so it knows what game is. (data[game_index])
-            external_id = assign_external_id(igdb_data[game])
+            external_id = assign_external_id(igdb_data[game], is_first_game)
 
             game = Game(  # iterate with game because igdb games list don't have a "game" key, so number instead.
                 title=igdb_data[game]["name"],
@@ -53,9 +58,12 @@ The `found` variable is important not only for optimization purposes, but also
 because there can be multiple records under the same platform — for example,
 the same game on Steam can have two external IDs. IGDB typically handles this
 by placing the valid one first, so we exit as soon as we find it.
+
+28/09/2026 - Added `is_first_game` logic as a fallback to try to find when 
+external ids are duplicate, further info in /docs/gotchas.md
 """
 # fmt: on
-def assign_external_id(igdb_data):
+def assign_external_id(igdb_data, is_first_game):
     external_id = ""
     found = False
 
@@ -63,8 +71,17 @@ def assign_external_id(igdb_data):
 
     for ex_game in igdb_data["external_games"]:
         if (ex_game["external_game_source"]["name"]) == "Steam":
-            found = True
-            external_id = ex_game["uid"]
+
+            # Reduce the number of API calls
+            if is_first_game:
+                external_id = ex_game["uid"]
+                steam_found = itad_mock(external_id, ITAD_TOKEN)
+                if steam_found == 200:
+                    found = True
+            else:
+                found = True
+                external_id = ex_game["uid"]
+
         if found == True:
             break
 
