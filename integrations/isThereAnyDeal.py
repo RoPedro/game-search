@@ -23,6 +23,20 @@ def isThereAnyDeal_config(ITAD_TOKEN):
     return itad_enabled
 
 
+def itad_mock(external_id, ITAD_TOKEN):
+    auth_header = {"ITAD-API-Key": ITAD_TOKEN}
+    r = requests.get(
+        f"{ITAD_BASE_URL}/games/lookup/v1",
+        params={"appid": external_id},
+        headers=auth_header,
+    )
+    game_data = json.loads(r.text)
+    if game_data["found"] == False:
+        return None
+    else:
+        return 200
+
+
 def get_itad_price(external_id, ITAD_TOKEN):
     auth_header = {"ITAD-API-Key": ITAD_TOKEN}
     r = requests.get(
