@@ -1,0 +1,24 @@
+# Development builds for release/ branches
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["release/*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout should happen BEFORE running anything on the repo
+      - uses: actions/checkout@v4
+      - name: Get app version
+        run: |
+          echo "APP_VERSION=$(awk -F'"' '/^version[[:space:]]*=/ {print $2; exit}' pyproject.toml)" >> $GITHUB_ENV
+        
+      - name: Build the Docker image
+        run: docker build --tag ${{ vars.IMAGE_NAME }}:$APP_VERSION .
+      - name: Login to Dockerhub
+        run: docker login -u ${{ vars.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TK }}
+
+      - name: Push to dockerhub
+        run: docker push ${{ vars.IMAGE_NAME }}:$APP_VERSION

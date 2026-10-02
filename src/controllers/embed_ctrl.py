@@ -4,7 +4,7 @@ import nextcord
 
 from config.env import ITAD_TOKEN, lang_data
 from core.utils import convert_date
-from integrations.isThereAnyDeal import ITAD_BASE_WEB_URL, get_itad_price
+from integrations.is_there_any_deal import ITAD_BASE_WEB_URL, get_itad_price
 from src.models.embeds import (
     deals_not_found_template,
     invalid_itad_key,

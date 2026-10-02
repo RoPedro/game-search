@@ -19,3 +19,18 @@ def convert_date(date_stamp):
         return datetime.fromtimestamp(date_stamp, tz=UTC).strftime("%d/%m/%Y")
     except ValueError:
         return None
+
+
+def initial_greet():
+    ascii_art = [
+        "▐▓▓▓▓▓▌▐▓▓▓▓▌▐▓▌   ▐▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▌▐▓▌",
+        "▐▓▌    ▐▓▌▐▓▌▐▓▓▌ ▐▓▓▌▐▓▌   ▐▓▌   ▐▓▌   ▐▓▌▐▓▌▐▓▌▐▓▌▐▓▌   ▐▓▌▐▓▌",
+        "▐▓▌▐▓▓▌▐▓▓▓▓▌▐▓▐▓▐▓▐▓▌▐▓▓▓▌ ▐▓▓▓▓▌▐▓▓▓▌ ▐▓▓▓▓▌▐▓▓▓▓▌▐▓▌   ▐▓▓▓▓▌",
+        "▐▓▌ ▐▓▌▐▓▌▐▓▌▐▓▌▐▓▌▐▓▌▐▓▌      ▐▓▌▐▓▌   ▐▓▌▐▓▌▐▓▐▓▌ ▐▓▌   ▐▓▌▐▓▌",
+        "▐▓▓▓▓▓▌▐▓▌▐▓▌▐▓▌   ▐▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▓▓▓▌▐▓▌▐▓▌▐▓▌▐▓▌▐▓▓▓▓▌▐▓▌▐▓▌",
+    ]
+
+    for line in ascii_art:
+        print(line)
+    
+    print("GameSearch started sucessfully")
