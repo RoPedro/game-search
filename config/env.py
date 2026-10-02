@@ -44,4 +44,3 @@ else:
 prefix = "?"
 if ENV == "development":
     prefix = "."
-
