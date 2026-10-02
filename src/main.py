@@ -9,6 +9,7 @@ from nextcord.ext import commands
 from config.env import DISCORD_BOT_TOKEN, ITAD_TOKEN, prefix
 from config.logger import setup_logging
 from core.health_handler import run_health_server
+from core.utils import initial_greet
 from integrations.is_there_any_deal import isThereAnyDeal_config
 from src.controllers.embed_ctrl import build_embed, send_prices
 from src.controllers.menu_ctrl import build_menu
@@ -19,6 +20,8 @@ threading.Thread(target=run_health_server, daemon=True).start()
 
 setup_logging()
 log = logging.getLogger(__name__)
+
+itad_enabled = isThereAnyDeal_config(ITAD_TOKEN)
 
 # Define intents so it can read message content (required for commands to work)
 intents = nextcord.Intents.default()
@@ -55,7 +58,6 @@ async def gsearch(ctx, *, query: str):
         if menu is not None:
             await ctx.send(view=menu)
 
-        itad_enabled = isThereAnyDeal_config(ITAD_TOKEN)
         if itad_enabled == True:
             asyncio.create_task(send_prices(ctx, result))
     else:
@@ -80,6 +82,11 @@ async def on_command_error(ctx, error):
 
 
 try:
+    initial_greet()
+    if itad_enabled is False:
+        log.warning(
+            "isThereAnyDeal integration is disabled, check your 'ITAD_TOKEN' environment variable"
+        )
     bot.run(str(DISCORD_BOT_TOKEN))
 except LoginFailure:  # Avoids the app from hanging on a fail start
     log.error("FAILED TO START: Invalid Bot Token")
