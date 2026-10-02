@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Get app version
         run: |
-          echo "APP_VERSION=$(awk -F'"' '/^version[[:space:]]*=/ {print $2; exit}' game-search/pyproject.toml)" >> $GITHUB_ENV
-
+          echo "APP_VERSION=$(awk -F'"' '/^version[[:space:]]*=/ {print $2; exit}' pyproject.toml)" >> $GITHUB_ENV
+        
       - name: Build the Docker image
         run: docker build --tag ${{ vars.IMAGE_NAME }}:$APP_VERSION .
       - name: Login to Dockerhub
