@@ -211,6 +211,9 @@ tempCodeRunnerFile.py
 # PyPI configuration file
 .pypirc
 
+# AI Skills
+/ai-tmp
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

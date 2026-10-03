@@ -10,6 +10,13 @@ GameSearch is a software that is traditionally ran as a Discord Bot. It's main f
 
 ---
 
+## Skills
+Instructions for repetitive tasks live at /agents/skills
+
+- [pr-descriptor](/agents/skills/pr-descriptor/skill.md) - For writing Pull Requests
+
+---
+
 ## Repository Structure
 
 ```
