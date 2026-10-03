@@ -18,7 +18,7 @@ def isThereAnyDeal_config(ITAD_TOKEN):
         itad_enabled = True
     else:
         log.warning(
-            "isThereAnyDeal integration is disabled, ITAD_TOKEN variable is neede for deals integration"
+            "isThereAnyDeal integration is disabled, ITAD_TOKEN variable is needed for deals integration"
         )
     return itad_enabled
 
