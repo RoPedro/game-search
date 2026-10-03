@@ -13,7 +13,7 @@ from core.utils import initial_greet
 from integrations.is_there_any_deal import isThereAnyDeal_config
 from src.controllers.embed_ctrl import build_embed, send_prices
 from src.controllers.menu_ctrl import build_menu
-from src.models.embeds import game_not_found
+from src.models.embeds import game_not_found, invalid_itad_key
 
 # Thread the health server so it crashes gracefully with the main process
 threading.Thread(target=run_health_server, daemon=True).start()
@@ -60,6 +60,10 @@ async def gsearch(ctx, *, query: str):
 
         if itad_enabled == True:
             asyncio.create_task(send_prices(ctx, result))
+        else:
+            log.warning("isThereAnyDeal integration is not enabled, deals not searched")
+            await ctx.send(embed=invalid_itad_key)
+            
     else:
         log.error(
             f"Result returned as: {result}. If it is None, probably a invalid game"
