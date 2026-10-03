@@ -27,7 +27,7 @@ itad_enabled = isThereAnyDeal_config(ITAD_TOKEN)
 intents = nextcord.Intents.default()
 intents.message_content = True
 
-
+nextcord.VoiceClient.warn_nacl = False
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 
