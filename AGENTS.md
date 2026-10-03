@@ -10,10 +10,22 @@ GameSearch is a software that is traditionally ran as a Discord Bot. It's main f
 
 ---
 
+## Skills
+Instructions for repetitive tasks live at /agents/skills
+
+- [pr-descriptor](/agents/skills/pr-descriptor/skill.md) - For writing Pull Requests
+
+---
+
 ## Repository Structure
 
 ```
-WIP
+/config - Handles log setup and environment variables;
+/core - Handles small utilitarians like date conversion, IGDB Auth, app greeter;
+/docs - [WIP] For now, used for taking notes on edge cases (gotchas.md);
+/integrations - Basic functionality for third party services like IGDB and isThereAnyDeal;
+/src - Main app logic, models, controllers, i18n;
+/tests - Standard test suite, includes /factories for reusable data
 ```
 
 ---
@@ -33,20 +45,15 @@ python3 main.py
 
 - **Language/runtime:** Refer to `pyproject.toml`
 - **Formatter:** Prettier, Black
-- **Linter:** <!-- e.g. ESLint, Ruff --> WIP
+- **Linter:** Ruff 
 
 ---
 
-## Testing (WIP)
+## Testing 
 ```bash
 # Run all tests
-<test command>
-
-# Run a single test
-<test command for one file>
+pytest
 ```
-
-- Tests live in `tests/` 
 - Aim for coverage on new logic; don't break existing tests
 
 ---
@@ -61,10 +68,8 @@ python3 main.py
 ---
 
 ## Off-Limits
-
-<!-- List files, dirs, or actions agents should never touch. -->
 - Do not run destructive commands (`DROP`, `rm -rf`, etc.) without explicit instruction
-- Do not touch .env, investigation is allowed if relevant to the context, but it's read-only for agents.
+- Do not touch .env, investigation is allowed if relevant to the context, but it's read-only for agents, unless specified by user.
 - Never run arbitrary `pip upgrade` etc, already used dependencies are frozen by design unless specified.
 - Writing on requirements.txt is allowed if relevant, but for features only available in updated libraries, ask for permission first.
 
@@ -72,7 +77,8 @@ python3 main.py
 
 ## Relevant Docs
 
-- [API Reference](https://api-docs.igdb.com/)
+- [IGDB API Reference](https://api-docs.igdb.com/)
+- [isThereAnyDeal API Reference](https://docs.isthereanydeal.com/)
 - [Nextcord Reference](https://docs.nextcord.dev/en/stable/index.html)
 - [GameSearch Repository](https://github.com/RoPedro/GameSearch)
 <!-- Add more as needed -->
