@@ -20,6 +20,8 @@ def isThereAnyDeal_config(ITAD_TOKEN):
 
 
 def itad_mock(external_id, ITAD_TOKEN):
+    if ITAD_TOKEN is None:
+        return None
     auth_header = {"ITAD-API-Key": ITAD_TOKEN}
     r = requests.get(
         f"{ITAD_BASE_URL}/games/lookup/v1",
